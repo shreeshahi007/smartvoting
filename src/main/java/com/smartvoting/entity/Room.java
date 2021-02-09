@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Data
@@ -26,4 +27,7 @@ public class Room {
 
     @Column(name="roomDescription")
     String roomDescription;
+
+    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    Set<Statement> statements;
 }

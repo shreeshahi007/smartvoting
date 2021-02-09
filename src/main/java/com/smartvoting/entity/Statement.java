@@ -22,8 +22,7 @@ public class Statement {
     @Column(name="dateCreated")
     Date dateCreated=new Date();
 
-    @ManyToOne
-    @org.hibernate.annotations.Target(Room.class)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="room_id")
     private Room room;
 
