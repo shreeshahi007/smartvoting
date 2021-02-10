@@ -33,4 +33,5 @@ public class Room {
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private Set<Statement> statements = new HashSet<>();
 
+
 }

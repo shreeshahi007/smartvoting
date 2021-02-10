@@ -1,5 +1,6 @@
 package com.smartvoting.controller;
 
+import com.smartvoting.dto.GuestDTO;
 import com.smartvoting.entity.Guest;
 import com.smartvoting.service.IGuestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class GuestController {
     IGuestService iGuestService;
 
     @PostMapping(value="/addGuest")
-    Single<Object> addGuest(@RequestBody Guest guest){
+    Single<Object> addGuest(@RequestBody GuestDTO guest){
         return iGuestService.addGuest(guest)
                 .subscribeOn(Schedulers.io());
 

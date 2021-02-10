@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name="statement")
-public class Statement extends Object {
+public class Statement {
     @Id
     @Column(name="statement_id")
     @GeneratedValue(generator = "uuid")
@@ -27,7 +27,7 @@ public class Statement extends Object {
     String roomId;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "statement_id")
+    @JoinColumn(name = "statement_id", referencedColumnName = "statement_id")
     List<Responses> responses;
 
     double average;
