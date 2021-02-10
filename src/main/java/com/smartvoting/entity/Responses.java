@@ -10,14 +10,19 @@ import javax.persistence.*;
 @Table(name="responses")
 public class Responses {
     @Id
-    @Column(name="responseId")
+    @Column(name="response_id")
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String responseId;
 
-    @JoinColumn(name="statement_id")
-    Statement statement;
 
-    @Column(name="responseValue")
+    @Column(name="statement_id")
+    String statementId;
+
+    @Column(name="response_value")
     Integer responseValue;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "guest_id")
+    Guest guest;
 }

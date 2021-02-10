@@ -11,24 +11,21 @@ import javax.persistence.*;
 @Table(name="guest")
 public class Guest {
     @Id
-    @Column(name="guestId")
+    @Column(name="guest_id")
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String guestId;
 
-//    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)//update and delete from this both are getting updated
-//    @JoinColumn(name = "room_id", referencedColumnName = "guestId")
-//    Room room;
-
-    @OneToOne(targetEntity = Room.class, cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name="room_id")
     Room room;
 
-    @Column(name="guestName")
+    @Column(name="guest_name")
     String guestName;
 
-    @Column(name="isAdmin")
+    @Column(name="is_admin")
     boolean isAdmin;
 
-    @Column(name="photoUrl")
+    @Column(name="photo_url")
     String photoUrl;
 }

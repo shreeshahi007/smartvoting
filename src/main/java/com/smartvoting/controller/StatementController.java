@@ -7,10 +7,7 @@ import com.smartvoting.repository.StatementRepository;
 import com.smartvoting.service.*;
 import com.smartvoting.service.impl.StatementServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import rx.Single;
 import rx.schedulers.Schedulers;
 
@@ -24,19 +21,26 @@ public class StatementController {
     @Autowired
     StatementRepository statementRepository;
 
+//    @Autowired
     @Autowired
     RoomRepository roomRepository;
 
-    @PostMapping(value = "/addStatement")
-    Single<Statement> addStatement(@RequestBody Statement statement){
-//        Room room = roomRepository.findById("92ea33fd-6b19-4649-bb39-2bc9a750ce19").get();
-//        statement.setRoom(room);
-//        System.out.println(room);
-        System.out.println("In add statement.. *********************");
-        return iStatementService.addStatement(statement)
+    @Autowired
+    IRoomService iRoomService;
+
+    @PostMapping(value = "/addStatement/{roomId}")
+    Single<Room> addStatement(@RequestBody Statement statement, @PathVariable String roomId){
+        Room room = roomRepository.findById(roomId).get();
+        room.getStatements().add(statement);
+        return iRoomService.addRoom(room)
                 .subscribeOn(Schedulers.io());
     }
 
+    @PostMapping(value = "/addStatement2/")
+    Single<Statement> addStatement2(@RequestBody Statement statement){
+        return iStatementService.addStatement(statement)
+                .subscribeOn(Schedulers.io());
+    }
 
 
 
