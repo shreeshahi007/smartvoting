@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import rx.Single;
 import rx.schedulers.Schedulers;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/guest")
 public class GuestController {

@@ -14,7 +14,7 @@ public class Responses {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String responseId;
-
+    
 
     @Column(name="statement_id")
     String statementId;

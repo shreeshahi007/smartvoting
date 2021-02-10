@@ -4,13 +4,14 @@ import com.smartvoting.entity.Room;
 import com.smartvoting.entity.Statement;
 import com.smartvoting.repository.RoomRepository;
 import com.smartvoting.repository.StatementRepository;
-import com.smartvoting.service.*;
-import com.smartvoting.service.impl.StatementServiceImpl;
+import com.smartvoting.service.IRoomService;
+import com.smartvoting.service.IStatementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rx.Single;
 import rx.schedulers.Schedulers;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/statement")
 public class StatementController {
