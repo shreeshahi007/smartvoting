@@ -3,6 +3,7 @@ package com.smartvoting.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Target;
 
 import javax.persistence.*;
 
@@ -16,7 +17,7 @@ public class Guest {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String guestId;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name="room_id")
     Room room;
 

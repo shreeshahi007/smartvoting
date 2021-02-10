@@ -36,7 +36,7 @@ public class StatementController {
                 .subscribeOn(Schedulers.io());
     }
 
-    @PostMapping(value = "/addStatement2/")
+    @PostMapping(value = "/addStatement2")
     Single<Statement> addStatement2(@RequestBody Statement statement){
         return iStatementService.addStatement(statement)
                 .subscribeOn(Schedulers.io());

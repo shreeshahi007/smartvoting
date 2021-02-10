@@ -1,5 +1,6 @@
 package com.smartvoting.controller;
 
+import com.smartvoting.dto.ResponsesDTO;
 import com.smartvoting.entity.Responses;
 import com.smartvoting.service.IResponsesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class ResponseController {
     IResponsesService iResponsesService;
 
     @PostMapping(value = "/addResponses")
-    Single<Object> addResponses(@RequestBody Responses responses) {
-        return iResponsesService.addResponses(responses)
+    Single<Object> addResponses(@RequestBody ResponsesDTO responsesDTO) {
+        return iResponsesService.addResponses(responsesDTO)
                               .subscribeOn(Schedulers.io());
 }
 }
