@@ -21,7 +21,7 @@ public class GuestServiceImpl implements IGuestService {
     RoomRepository roomRepository;
 
     @Override
-    public Single<Object> addGuest(GuestDTO guestDTO) {
+    public Single<Guest> addGuest(GuestDTO guestDTO) {
         return Single.create(
                 singleSubscriber -> {
                     Guest addedGuest = guestRepository.save(toGuest(guestDTO));
@@ -37,5 +37,19 @@ public class GuestServiceImpl implements IGuestService {
         Room room = roomRepository.findById(guestDTO.getRoomId()).get();
         addedGuest.setRoom(room);
         return addedGuest;
+    }
+
+    @Override
+    public Single<String> deleteGuest(String guestId) {
+        return Single.create(
+                singleSubscriber -> {
+                    try{
+                        guestRepository.deleteById(guestId);
+                        singleSubscriber.onSuccess("Delete the guest");
+                    } catch (Exception e){
+                        singleSubscriber.onError(e);
+                    }
+                }
+        );
     }
 }

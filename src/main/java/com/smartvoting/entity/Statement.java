@@ -26,9 +26,6 @@ public class Statement {
     @Column(name = "room_id")
     String roomId;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "statement_id", referencedColumnName = "statement_id")
-    List<Responses> responses;
 
     double average;
 

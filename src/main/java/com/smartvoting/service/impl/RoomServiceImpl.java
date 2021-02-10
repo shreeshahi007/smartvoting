@@ -36,4 +36,18 @@ public class RoomServiceImpl implements IRoomService {
                 }
         );
     }
+
+    @Override
+    public Single<String> deleteRoom(String roomId) {
+        return Single.create(
+                singleSubscriber -> {
+                    try{
+                        roomRepository.deleteById(roomId);
+                        singleSubscriber.onSuccess("Deleted");
+                    } catch (Exception e){
+                        singleSubscriber.onError(e);
+                    }
+                }
+        );
+    }
 }
