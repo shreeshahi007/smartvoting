@@ -38,8 +38,8 @@ public class RoomController {
 
         Statement statement = new Statement();
         statement.setStatementContent("this is general statement");
-        statement.setRoom(room);
-        statementController.addStatement(statement);
+//        statement.setRoom(room);
+//        statementController.addStatement(statement);
 
         return statement;
     }

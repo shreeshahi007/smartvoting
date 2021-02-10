@@ -15,10 +15,9 @@ public class Responses {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String responseId;
 
-    @ManyToOne
-    @org.hibernate.annotations.Target(Statement.class)
-    @JoinColumn(name="statement_id")
-    Statement statement;
+
+    @Column(name="statement_id")
+    String statementId;
 
     @Column(name="responseValue")
     Integer responseValue;

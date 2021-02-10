@@ -4,6 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -11,23 +12,25 @@ import java.util.Set;
 @Table(name="room")
 public class Room {
     @Id
-    @Column(name="roomId")
+    @Column(name="room_id")
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String roomId;
 
-    @Column(name="roomName")
+    @Column(name="room_name")
     String roomName;
 
     @Column(name="password")
     String password;
 
-    @Column(name="isActive")
+    @Column(name="is_active")
     boolean isActive;
 
-    @Column(name="roomDescription")
+    @Column(name="room_description")
     String roomDescription;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    Set<Statement> statements;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "room_id", referencedColumnName = "room_id")
+    private Set<Statement> statements = new HashSet<>();
+
 }

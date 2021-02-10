@@ -27,8 +27,12 @@ public class RoomServiceImpl implements IRoomService {
     public Single<Room> getRoomDetails(String roomId) {
         return Single.create(
                 singleSubscriber -> {
-                    Room roomDetail = roomRepository.findById(roomId).get();
-                    singleSubscriber.onSuccess(roomDetail);
+                    try {
+                        Room roomDetail = roomRepository.findById(roomId).get();
+                        singleSubscriber.onSuccess(roomDetail);
+                    } catch (Exception e) {
+                        singleSubscriber.onError(e);
+                    }
                 }
         );
     }
