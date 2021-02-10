@@ -1,4 +1,8 @@
 package com.smartvoting.service.impl;
 
-public class MessageServiceImpl {
+import com.smartvoting.service.IMessageService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MessageServiceImpl implements IMessageService {
 }

@@ -16,9 +16,11 @@ public class Guest {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String guestId;
 
-    @OneToOne
-    @org.hibernate.annotations.Target(Room.class)
-    @JoinColumn(name="room_id")
+//    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)//update and delete from this both are getting updated
+//    @JoinColumn(name = "room_id", referencedColumnName = "guestId")
+//    Room room;
+
+    @OneToOne(targetEntity = Room.class, cascade = CascadeType.ALL)
     Room room;
 
     @Column(name="guestName")

@@ -28,6 +28,9 @@ public class Room {
     @Column(name="roomDescription")
     String roomDescription;
 
-    @OneToMany(mappedBy = "room", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,mappedBy = "room")//mappedBy attribute on non owning site
+//    Guest guest;
+
+    @OneToMany(mappedBy = "room", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Set<Statement> statements;
 }
