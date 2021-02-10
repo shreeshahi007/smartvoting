@@ -2,7 +2,6 @@ package com.smartvoting.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Target;
 
 import javax.persistence.*;
 
@@ -16,14 +15,14 @@ public class Responses {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     String responseId;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="statement_id", referencedColumnName = "statement_id")
     Statement statement;
 
     @Column(name="response_value")
     Integer responseValue;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "guest_id", referencedColumnName = "guest_id")
     Guest guest;
 }

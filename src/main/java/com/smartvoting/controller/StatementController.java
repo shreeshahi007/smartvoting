@@ -1,5 +1,6 @@
 package com.smartvoting.controller;
 
+import com.smartvoting.dto.StatementDTO;
 import com.smartvoting.entity.Room;
 import com.smartvoting.entity.Statement;
 import com.smartvoting.repository.RoomRepository;
@@ -38,10 +39,11 @@ public class StatementController {
     }
 
     @PostMapping(value = "/addStatement2")
-    Single<Statement> addStatement2(@RequestBody Statement statement){
-        return iStatementService.addStatement(statement)
+    Single<Object> addStatement2(@RequestBody StatementDTO statementDTO){
+        return iStatementService.addStatement(statementDTO)
                 .subscribeOn(Schedulers.io());
     }
+
 
 
 
