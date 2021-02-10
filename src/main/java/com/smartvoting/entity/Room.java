@@ -29,7 +29,7 @@ public class Room {
     @Column(name="room_description")
     String roomDescription;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id", referencedColumnName = "room_id")
     private Set<Statement> statements = new HashSet<>();
 

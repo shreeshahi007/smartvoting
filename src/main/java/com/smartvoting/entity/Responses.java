@@ -2,6 +2,9 @@ package com.smartvoting.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Target;
 
 import javax.persistence.*;
 
@@ -22,7 +25,8 @@ public class Responses {
     @Column(name="response_value")
     Integer responseValue;
 
-    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToOne (cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinColumn(name = "guest_id", referencedColumnName = "guest_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     Guest guest;
 }

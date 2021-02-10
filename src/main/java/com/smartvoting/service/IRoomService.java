@@ -9,4 +9,6 @@ public interface IRoomService {
     Single<Room> addRoom(Room room);
 
     Single<Room> getRoomDetails(String roomId);
+
+    Single<String> deleteRoom(String roomId);
 }

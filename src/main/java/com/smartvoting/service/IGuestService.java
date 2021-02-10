@@ -7,7 +7,9 @@ import rx.Single;
 
 @Service
 public interface IGuestService {
-    Single<Object> addGuest(GuestDTO guest);
+    Single<Guest> addGuest(GuestDTO guest);
 
     Guest toGuest(GuestDTO guestDTO);
+
+    Single<String> deleteGuest(String guestId);
 }

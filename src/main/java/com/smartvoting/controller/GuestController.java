@@ -16,9 +16,15 @@ public class GuestController {
     IGuestService iGuestService;
 
     @PostMapping(value="/addGuest")
-    Single<Object> addGuest(@RequestBody GuestDTO guest){
+    Single<Guest> addGuest(@RequestBody GuestDTO guest){
         return iGuestService.addGuest(guest)
                 .subscribeOn(Schedulers.io());
 
+    }
+
+    @GetMapping(value = "/deleteGuest/{guestId}")
+    Single<String> deleteGuest(@PathVariable("guestId") String guestId){
+        return iGuestService.deleteGuest(guestId)
+                .subscribeOn(Schedulers.io());
     }
 }

@@ -10,4 +10,5 @@ public class GuestDTO {
     String guestName;
     boolean isAdmin;
     String photoUrl;
+    String password;
 }

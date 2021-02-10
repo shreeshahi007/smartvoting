@@ -30,6 +30,11 @@ public class RoomController {
                 .subscribeOn(Schedulers.io());
     }
 
+    @GetMapping(value = "/deleteRoom/{roomId}")
+    Single<String> deleteRoom(@PathVariable String roomId){
+        return iRoomService.deleteRoom(roomId)
+                .subscribeOn(Schedulers.io());
+    }
     @GetMapping(value = "/test")
     Object test(){
         Room room = new Room();

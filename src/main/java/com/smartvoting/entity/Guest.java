@@ -29,4 +29,5 @@ public class Guest {
 
     @Column(name="photo_url")
     String photoUrl;
+
 }
