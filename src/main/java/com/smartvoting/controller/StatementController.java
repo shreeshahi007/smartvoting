@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import rx.Single;
 import rx.schedulers.Schedulers;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/statement")
 public class StatementController {
@@ -46,6 +48,12 @@ public class StatementController {
                 .subscribeOn(Schedulers.io());
     }
 
+    @GetMapping(value="/displayStatement/{roomId}")
+    Single<List<Statement>> displayStatement(@PathVariable("roomId") String roomId){
+        System.out.println("Inside display statement");
+        return iStatementService.displayStatement(roomId)
+                .subscribeOn(Schedulers.io());
+    }
 
 
 }

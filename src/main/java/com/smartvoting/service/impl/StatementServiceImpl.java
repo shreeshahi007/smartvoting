@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rx.Single;
 
+import java.util.List;
+
 @Service
 public class StatementServiceImpl implements IStatementService {
     @Autowired
@@ -37,6 +39,21 @@ public Single<Object> addStatement(StatementDTO statementDTO) {
             }
     );
 }
+
+    @Override
+    public Single<List<Statement>> displayStatement(String roomId) {
+        return Single.create(
+                singleSubscriber -> {
+                    try{
+                        System.out.println("Inside display statement service");
+                        List<Statement> statements=statementRepository.findByRoomIdOrderByDateCreatedDesc(roomId);
+                        singleSubscriber.onSuccess(statements);
+                    }catch (Exception e){
+                        singleSubscriber.onError(e);
+                    }
+                }
+        );
+    }
 
 
     @Override
