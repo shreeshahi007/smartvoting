@@ -21,4 +21,6 @@ public interface ResponsesRepository extends JpaRepository<Responses,String> {
     @Query(value = "select TOP 1 response_value FROM Responses GROUP BY response_value ORDER BY COUNT(*) DESC where statement_id=?1", nativeQuery = true)
     double getMode(String statementId);
 
+    @Query(value = "select * from responses where statement_id = ?1 and guest_id = ?2",nativeQuery = true)
+    Responses findByStatementIdAndGuestId(String statementId, String guestId);
 }

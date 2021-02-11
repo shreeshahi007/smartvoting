@@ -1,7 +1,6 @@
 package com.smartvoting.repository;
 
 import com.smartvoting.entity.Guest;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,4 +15,10 @@ public interface GuestRepository extends JpaRepository<Guest,String> {
     @Query(value = "select * from guest where room_id = ?1", nativeQuery = true)
     List<Guest> findByRoom(String roomId);
 
+
+//    @Query("select" +
+//            "new com.smartvoting.responseDTO.GuestWithResponseValues(g.guestName, g.guestId,g.photoUrl, r.responseValue )"+
+//            "from Guest g inner join Responses r on g.guestId = r.Guest where r.statement = ?1"
+//    )
+//    List<GuestWithResponseValues> getGuestsResponses(String statementId);
 }

@@ -2,6 +2,7 @@ package com.smartvoting.controller;
 
 import com.smartvoting.dto.GuestDTO;
 import com.smartvoting.entity.Guest;
+import com.smartvoting.responseDTO.GuestWithResponseValuesDTO;
 import com.smartvoting.service.IGuestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +36,11 @@ public class GuestController {
         return iGuestService.displayGuests(roomId)
                 .subscribeOn(Schedulers.io());
 
+    }
+
+    @GetMapping(value = "/guestsResponses/{statementId}")
+    Single<List<GuestWithResponseValuesDTO>> getGuestsResponses(@PathVariable("statementId") String statementId){
+        return iGuestService.getGuestsResponses(statementId)
+                .subscribeOn(Schedulers.io());
     }
 }
