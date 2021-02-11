@@ -2,6 +2,7 @@ package com.smartvoting.controller;
 
 import com.smartvoting.dto.ResponsesDTO;
 import com.smartvoting.entity.Responses;
+import com.smartvoting.responseDTO.StatsDTO;
 import com.smartvoting.service.IResponsesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,5 +21,12 @@ public class ResponseController {
     Single<Object> addResponses(@RequestBody ResponsesDTO responsesDTO) {
         return iResponsesService.addResponses(responsesDTO)
                               .subscribeOn(Schedulers.io());
-}
+    }
+
+
+    @GetMapping(value = "/getStats/{statementId}")
+    Single<StatsDTO> getStats(@PathVariable("statementId") String statementId){
+        return iResponsesService.getStats(statementId)
+                .subscribeOn(Schedulers.io());
+    }
 }

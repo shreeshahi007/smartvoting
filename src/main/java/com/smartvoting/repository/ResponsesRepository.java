@@ -11,7 +11,7 @@ import javax.transaction.Transactional;
 @Repository
 public interface ResponsesRepository extends JpaRepository<Responses,String> {
 
-    @Query(value = "select AVG(response_value) FROM Responses where statement_id=?1", nativeQuery = true)
+    @Query(value = "select AVG(response_value) FROM responses where statement_id=?1", nativeQuery = true)
     double getMean(String statementId);
 
 
