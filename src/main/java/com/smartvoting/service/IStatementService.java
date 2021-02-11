@@ -17,4 +17,5 @@ public interface IStatementService {
     Single<Object> addStatement(StatementDTO statementDTO);
 
     Single<List<Statement>>displayStatement(String roomId);
+
 }

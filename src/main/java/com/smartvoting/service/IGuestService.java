@@ -2,6 +2,7 @@ package com.smartvoting.service;
 
 import com.smartvoting.dto.GuestDTO;
 import com.smartvoting.entity.Guest;
+import com.smartvoting.responseDTO.GuestWithResponseValuesDTO;
 import org.springframework.stereotype.Service;
 import rx.Single;
 
@@ -16,4 +17,7 @@ public interface IGuestService {
     Single<String> deleteGuest(String guestId);
 
     Single<List<Guest>> displayGuests(String roomId);
+
+    Single<List<GuestWithResponseValuesDTO>> getGuestsResponses(String statementId);
+    List<GuestWithResponseValuesDTO> getGuestsResponsesHelper(String statementId);
 }
