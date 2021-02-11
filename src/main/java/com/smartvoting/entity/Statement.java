@@ -26,6 +26,8 @@ public class Statement {
     @Column(name = "room_id")
     String roomId;
 
+    @Column(name = "is_active")
+    boolean isActive;
 
     double average;
 
