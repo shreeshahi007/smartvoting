@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rx.Single;
 
+import java.util.List;
+
 @Service
 public class GuestServiceImpl implements IGuestService {
 
@@ -47,6 +49,20 @@ public class GuestServiceImpl implements IGuestService {
                         guestRepository.deleteById(guestId);
                         singleSubscriber.onSuccess("Delete the guest");
                     } catch (Exception e){
+                        singleSubscriber.onError(e);
+                    }
+                }
+        );
+    }
+
+    @Override
+    public Single<List<Guest>> displayGuests(String roomId) {
+        return Single.create(
+                singleSubscriber -> {
+                    try{
+                        List<Guest> guests = guestRepository.findByRoom(roomId);
+                        singleSubscriber.onSuccess(guests);
+                    }catch(Exception e){
                         singleSubscriber.onError(e);
                     }
                 }

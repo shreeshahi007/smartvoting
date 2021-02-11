@@ -49,4 +49,17 @@ public class ResponsesServiceImpl implements IResponsesService {
         return addedResponses;
     }
 
+    @Override
+    public double getMean(String statementId){
+        return responsesRepository.getMean(statementId);
+    }
+    @Override
+    public double getMedian(String statementId){
+        return responsesRepository.getMedian(statementId);
+    }
+    @Override
+    public double getMode(String statementId){
+        return responsesRepository.getMode(statementId);
+
+    }
 }

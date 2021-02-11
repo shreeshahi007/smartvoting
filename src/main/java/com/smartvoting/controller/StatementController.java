@@ -6,7 +6,6 @@ import com.smartvoting.entity.Statement;
 import com.smartvoting.repository.RoomRepository;
 import com.smartvoting.repository.StatementRepository;
 import com.smartvoting.service.*;
-import com.smartvoting.service.impl.StatementServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,11 +38,11 @@ public class StatementController {
     }
 
     @PostMapping(value = "/addStatement")
-    Single<Statement> addStatement2(@RequestBody StatementDTO statementDTO){
+    Single<Object> addStatement2(@RequestBody StatementDTO statementDTO){
         Statement statement = new Statement();
-        BeanUtils.copyProperties(statementDTO, statement);
+        BeanUtils.copyProperties(statementDTO, statementDTO);
         statement.setRoomId(statementDTO.getRoomId());
-        return iStatementService.addStatement(statement)
+        return iStatementService.addStatement(statementDTO)
                 .subscribeOn(Schedulers.io());
     }
 

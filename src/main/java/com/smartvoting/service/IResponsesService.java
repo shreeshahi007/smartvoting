@@ -8,4 +8,10 @@ import rx.Single;
 @Service
 public interface IResponsesService {
     Single<Object> addResponses(ResponsesDTO responses);
+
+    double getMean(String statementId);
+
+    double getMedian(String statementId);
+
+    double getMode(String statementId);
 }

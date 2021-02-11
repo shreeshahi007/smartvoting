@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import rx.Single;
 import rx.schedulers.Schedulers;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/guest")
@@ -27,5 +29,11 @@ public class GuestController {
     Single<String> deleteGuest(@PathVariable("guestId") String guestId){
         return iGuestService.deleteGuest(guestId)
                 .subscribeOn(Schedulers.io());
+    }
+    @GetMapping(value="/displayGuests/{roomId}")
+    Single<List<Guest>> displayGuests(@PathVariable("roomId") String roomId){
+        return iGuestService.displayGuests(roomId)
+                .subscribeOn(Schedulers.io());
+
     }
 }
