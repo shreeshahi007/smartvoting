@@ -29,6 +29,7 @@ public class Statement {
     @Column(name = "is_active")
     boolean isActive;
 
+    @Column(name="average")
     double average;
 
 }
