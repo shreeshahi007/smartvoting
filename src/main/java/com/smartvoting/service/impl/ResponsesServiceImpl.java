@@ -9,12 +9,14 @@ import com.smartvoting.repository.ResponsesRepository;
 import com.smartvoting.repository.StatementRepository;
 import com.smartvoting.responseDTO.StatsDTO;
 import com.smartvoting.service.IResponsesService;
+import com.smartvoting.utils.Utils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rx.Single;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ResponsesServiceImpl implements IResponsesService {
@@ -56,15 +58,7 @@ public class ResponsesServiceImpl implements IResponsesService {
     public double getMean(String statementId){
         return responsesRepository.getMean(statementId);
     }
-    @Override
-    public double getMedian(String statementId){
-        return responsesRepository.getMedian(statementId);
-    }
-    @Override
-    public double getMode(String statementId){
-        return responsesRepository.getMode(statementId);
 
-    }
 
     @Override
     public Single<StatsDTO> getStats(String statementId) {
@@ -84,8 +78,21 @@ public class ResponsesServiceImpl implements IResponsesService {
     public StatsDTO getStatsHelper(String statementId) {
         StatsDTO statsDTO = new StatsDTO();
         statsDTO.setMean(getMean(statementId));
-        statsDTO.setMedian(0);
-        statsDTO.setMode(new ArrayList<>(0));
+
+        Utils utils = new Utils();
+        List<Integer> integerList =getResponsesByStatementId(statementId);
+        statsDTO.setMedian(utils.getMedian(integerList));
+        statsDTO.setMode(utils.getMode(integerList));
         return statsDTO;
+    }
+
+    @Override
+    public List<Integer> getResponsesByStatementId(String statementId) {
+        List<Responses> responsesList = responsesRepository.findByStatementId(statementId);
+        List<Integer> list = new ArrayList<>();
+        for (Responses responses : responsesList){
+            list.add(responses.getResponseValue());
+        }
+        return list;
     }
 }

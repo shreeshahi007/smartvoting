@@ -1,8 +1,11 @@
 package com.smartvoting.controller;
 
+import com.smartvoting.dto.GuestDTO;
 import com.smartvoting.entity.Room;
 import com.smartvoting.entity.Statement;
+import com.smartvoting.repository.RoomRepository;
 import com.smartvoting.service.IRoomService;
+import com.smartvoting.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rx.Single;
@@ -17,6 +20,9 @@ public class RoomController {
 
     @Autowired
     StatementController statementController;
+
+    @Autowired
+    RoomRepository roomRepository;
 
     @PostMapping(value = "/addRoom")
     Single<Room> addRoom(@RequestBody Room room){
@@ -35,6 +41,13 @@ public class RoomController {
         return iRoomService.deleteRoom(roomId)
                 .subscribeOn(Schedulers.io());
     }
+
+    @GetMapping(value = "/isAdmin")
+    boolean isAdmin(@RequestBody GuestDTO guestDTO){
+        Utils utils = new Utils();
+        return utils.validatePassword(guestDTO, roomRepository);
+    }
+
     @GetMapping(value = "/test")
     Object test(){
         Room room = new Room();

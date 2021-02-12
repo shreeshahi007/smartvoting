@@ -1,5 +1,9 @@
 package com.smartvoting.utils;
 
+import com.smartvoting.dto.GuestDTO;
+import com.smartvoting.entity.Room;
+import com.smartvoting.repository.RoomRepository;
+
 import java.util.*;
 
 public class Utils {
@@ -21,10 +25,40 @@ public class Utils {
 
     public List<Integer> getMode(List<Integer> numbers){
         int size = numbers.size();
-        int count[] = new int[size];
+        if(size == 0){
+            return new ArrayList<>();
+        }
+
 
         List<Integer> modes = new ArrayList<>();
-        modes.add(0);
+        HashMap<Integer , Integer> hashMap =  new HashMap<>();
+        for (int i : numbers){
+            hashMap.put(i , hashMap.getOrDefault(i , 0) + 1);
+        }
+        int frequency = 0;
+        for (Map.Entry<Integer , Integer> entry: hashMap.entrySet()){
+            int key = entry.getKey();
+            int value = entry.getValue();
+
+            frequency = Math.max(value, frequency);
+        }
+        for (Map.Entry<Integer , Integer> entry : hashMap.entrySet()){
+            int key = entry.getKey();
+            int value = entry.getValue();
+            if (frequency == value)
+                modes.add(key);
+        }
         return modes;
+    }
+
+    public boolean validatePassword(GuestDTO guestDTO, RoomRepository roomRepository){
+        String roomId = guestDTO.getRoomId();
+        String password = guestDTO.getPassword();
+        Room room = roomRepository.findById(roomId).get();
+        if(room == null){
+            return false;
+        }
+        return password.equals(room.getPassword());
+
     }
 }
