@@ -14,6 +14,7 @@ import rx.schedulers.Schedulers;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/statement")
 public class StatementController {

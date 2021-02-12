@@ -42,12 +42,6 @@ public class RoomController {
                 .subscribeOn(Schedulers.io());
     }
 
-    @GetMapping(value = "/isAdmin")
-    boolean isAdmin(@RequestBody GuestDTO guestDTO){
-        Utils utils = new Utils();
-        return utils.validatePassword(guestDTO, roomRepository);
-    }
-
     @GetMapping(value = "/test")
     Object test(){
         Room room = new Room();

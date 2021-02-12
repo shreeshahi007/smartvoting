@@ -2,8 +2,10 @@ package com.smartvoting.controller;
 
 import com.smartvoting.dto.GuestDTO;
 import com.smartvoting.entity.Guest;
+import com.smartvoting.repository.RoomRepository;
 import com.smartvoting.responseDTO.GuestWithResponseValuesDTO;
 import com.smartvoting.service.IGuestService;
+import com.smartvoting.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rx.Single;
@@ -52,6 +54,9 @@ public static int generateRandom(int min,int max) {
     @Autowired
     IGuestService iGuestService;
 
+    @Autowired
+    RoomRepository roomRepository;
+
     @PostMapping(value="/addGuest")
     Single<Guest> addGuest(@RequestBody GuestDTO guest){
         guest.setPhotoUrl(avatars[generateRandom(0,avatars.length)]);
@@ -76,5 +81,16 @@ public static int generateRandom(int min,int max) {
     Single<List<GuestWithResponseValuesDTO>> getGuestsResponses(@PathVariable("statementId") String statementId){
         return iGuestService.getGuestsResponses(statementId)
                 .subscribeOn(Schedulers.io());
+    }
+
+    @PostMapping(value = "/addGuestAsAdmin")
+    Single<Guest> addGuestAsAdmin(@RequestBody GuestDTO guestDTO){
+        Utils utils = new Utils();
+        boolean isAdminResult =  utils.validatePassword(guestDTO, roomRepository);
+        if(isAdminResult){
+            return iGuestService.addGuest(guestDTO)
+            .subscribeOn(Schedulers.io());
+        }
+        return null;
     }
 }

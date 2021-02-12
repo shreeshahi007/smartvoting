@@ -29,4 +29,5 @@ public class ResponseController {
         return iResponsesService.getStats(statementId)
                 .subscribeOn(Schedulers.io());
     }
+
 }
