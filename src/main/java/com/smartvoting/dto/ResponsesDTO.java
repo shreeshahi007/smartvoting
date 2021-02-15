@@ -7,4 +7,5 @@ public class ResponsesDTO {
     Integer responseValue;
     String guestId;
     String statementId;
+//    String responseId;
 }

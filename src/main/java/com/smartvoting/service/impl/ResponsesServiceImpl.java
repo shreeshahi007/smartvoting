@@ -44,8 +44,16 @@ public class ResponsesServiceImpl implements IResponsesService {
         );
     }
 
+
     public Responses toResponses(ResponsesDTO responsesDTO) {
-        Responses addedResponses = new Responses();
+        Responses addedResponses;
+        addedResponses = responsesRepository.findByStatementIdAndGuestId(
+                responsesDTO.getStatementId(),
+                responsesDTO.getGuestId()
+        );
+        if(addedResponses == null){
+            addedResponses = new Responses();
+        }
         BeanUtils.copyProperties(responsesDTO, addedResponses);
         Statement statement = statementRepository.findById(responsesDTO.getStatementId()).get();
         Guest guest = guestRepository.findById(responsesDTO.getGuestId()).get();
@@ -76,8 +84,14 @@ public class ResponsesServiceImpl implements IResponsesService {
 
     @Override
     public StatsDTO getStatsHelper(String statementId) {
+        double mean = 0, median = 0, mode = 0;
         StatsDTO statsDTO = new StatsDTO();
-        statsDTO.setMean(getMean(statementId));
+        try{
+            mean = getMean(statementId);
+        } catch (Exception e){
+//            System.out.println(e);
+        }
+        statsDTO.setMean(mean);
 
         Utils utils = new Utils();
         List<Integer> integerList =getResponsesByStatementId(statementId);

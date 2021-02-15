@@ -12,6 +12,7 @@ import java.util.List;
 public interface IResponsesService {
     Single<Object> addResponses(ResponsesDTO responses);
 
+
     double getMean(String statementId);
 
 

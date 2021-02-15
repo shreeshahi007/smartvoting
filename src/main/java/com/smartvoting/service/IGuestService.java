@@ -16,8 +16,10 @@ public interface IGuestService {
 
     Single<String> deleteGuest(String guestId);
 
-    Single<List<Guest>> displayGuests(String roomId);
+    Single<List<GuestDTO>> displayGuests(String roomId);
 
     Single<List<GuestWithResponseValuesDTO>> getGuestsResponses(String statementId);
     List<GuestWithResponseValuesDTO> getGuestsResponsesHelper(String statementId);
+
+    List<GuestDTO> displayGuestsHelper(String roomId);
 }

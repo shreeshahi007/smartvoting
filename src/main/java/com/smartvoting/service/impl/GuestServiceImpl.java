@@ -18,6 +18,7 @@ import rx.Single;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GuestServiceImpl implements IGuestService {
@@ -68,17 +69,33 @@ public class GuestServiceImpl implements IGuestService {
     }
 
     @Override
-    public Single<List<Guest>> displayGuests(String roomId) {
+    public Single<List<GuestDTO>> displayGuests(String roomId) {
         return Single.create(
                 singleSubscriber -> {
                     try {
-                        List<Guest> guests = guestRepository.findByRoom(roomId);
-                        singleSubscriber.onSuccess(guests);
+                        singleSubscriber.onSuccess(displayGuestsHelper(roomId));
                     } catch (Exception e) {
                         singleSubscriber.onError(e);
                     }
                 }
         );
+    }
+
+    @Override
+    public List<GuestDTO> displayGuestsHelper(String roomId) {
+//        List<GuestDTO> guests = new ArrayList<>();
+        List<Guest> guests1 = guestRepository.findByRoomId(roomId);
+        List<GuestDTO> guests = guests1.stream().map(guest -> {
+            GuestDTO guestDTO = new GuestDTO();
+            guestDTO.setGuestName(guest.getGuestName());
+            guestDTO.setRoomId(roomId);
+            guestDTO.setPhotoUrl(guest.getPhotoUrl());
+            guestDTO.setAdmin(guest.isAdmin());
+            System.out.println(guest);
+            System.out.println(guestDTO);
+            return guestDTO;
+        }).collect(Collectors.toList());
+        return guests;
     }
 
     @Override
@@ -97,13 +114,25 @@ public class GuestServiceImpl implements IGuestService {
 
     @Override
     public List<GuestWithResponseValuesDTO> getGuestsResponsesHelper(String statementId) {
+//        System.out.println("Inside getGuestsResponsesHelper");
+//        System.out.println(statementId);
+        if(statementId.equals("undefined")){
+            return new ArrayList<>();
+        }
         Statement statement = statementRepository.findById(statementId).get();
-        List<Guest> guests = guestRepository.findByRoom(statement.getRoomId());
+        List<Guest> guests = guestRepository.findByRoomId(statement.getRoomId());
         List<GuestWithResponseValuesDTO> guestWithResponseValues = new ArrayList<>();
         for (Guest guest : guests) {
-            Responses responses = responsesRepository.findByStatementIdAndGuestId(statementId, guest.getGuestId());
             GuestWithResponseValuesDTO guestWithResponseValues1 = new GuestWithResponseValuesDTO();
             BeanUtils.copyProperties(guest, guestWithResponseValues1);
+            Responses responses;
+            try {
+                responses = responsesRepository.findByStatementIdAndGuestId(statementId, guest.getGuestId());
+            } catch (Exception e) {
+                responses = null;
+                e.printStackTrace();
+            }
+            guestWithResponseValues1.setAdmin(guest.isAdmin());
             if (responses == null) {
                 guestWithResponseValues1.setResponseValue(0);
             } else {
@@ -112,6 +141,7 @@ public class GuestServiceImpl implements IGuestService {
             guestWithResponseValues.add(guestWithResponseValues1);
 
         }
+//        System.out.println("Sent the response from getGuestsResponsesHelper");
         return guestWithResponseValues;
     }
 }

@@ -19,37 +19,38 @@ import java.util.concurrent.ThreadLocalRandom;
 @RestController
 @RequestMapping("/guest")
 public class GuestController {
-     private static String[] avatars={"https://imgur.com/v9dDexB",
-    "https://imgur.com/b36Pd3q",
-    "https://imgur.com/PBQRbcv",
-    "https://imgur.com/2BXhwbB",
-    "https://imgur.com/3uefIAv",
-    "https://imgur.com/6y37gQ1",
-    "https://imgur.com/Nhgocus",
-    "https://imgur.com/pNbYDLk",
-    "https://imgur.com/Ka2JeTn",
-    "https://imgur.com/FsqVqF4",
-    "https://imgur.com/ehqxeo8",
-    "https://imgur.com/yS7XTC6",
-    "https://imgur.com/KGl0vzD",
-    "https://imgur.com/c9nM3lI",
-    "https://imgur.com/7k0o6G0",
-    "https://imgur.com/38OcWn1",
-    "https://imgur.com/3u4slwM",
-    "https://imgur.com/iYeujzC",
-    "https://imgur.com/r31dhsc",
-    "https://imgur.com/7a1mzuB"
+    private static final String[] avatars = {
+            "https://imgur.com/v9dDexB.png",
+            "https://imgur.com/b36Pd3q.png",
+            "https://imgur.com/PBQRbcv.png",
+            "https://imgur.com/2BXhwbB.png",
+            "https://imgur.com/3uefIAv.png",
+            "https://imgur.com/6y37gQ1.png",
+            "https://imgur.com/Nhgocus.png",
+            "https://imgur.com/pNbYDLk.png",
+            "https://imgur.com/Ka2JeTn.png",
+            "https://imgur.com/FsqVqF4.png",
+            "https://imgur.com/ehqxeo8.png",
+            "https://imgur.com/yS7XTC6.png",
+            "https://imgur.com/KGl0vzD.png",
+            "https://imgur.com/c9nM3lI.png",
+            "https://imgur.com/7k0o6G0.png",
+            "https://imgur.com/38OcWn1.png",
+            "https://imgur.com/3u4slwM.png",
+            "https://imgur.com/iYeujzC.png",
+            "https://imgur.com/r31dhsc.png",
+            "https://imgur.com/7a1mzuB.png"
     };
-public static int generateRandom(int min,int max) {
-    max=avatars.length;
-    int randomNum = ThreadLocalRandom.current().nextInt(min, max);
-    min++;
-    if(min==max)
-    {
-        min=max % min;
+
+    public static int generateRandom(int min, int max) {
+        max = avatars.length;
+        int randomNum = ThreadLocalRandom.current().nextInt(min, max);
+        min++;
+        if (min >= max) {
+            min = max % min;
+        }
+        return randomNum;
     }
-    return randomNum;
-}
 
     @Autowired
     IGuestService iGuestService;
@@ -57,39 +58,41 @@ public static int generateRandom(int min,int max) {
     @Autowired
     RoomRepository roomRepository;
 
-    @PostMapping(value="/addGuest")
-    Single<Guest> addGuest(@RequestBody GuestDTO guest){
-        guest.setPhotoUrl(avatars[generateRandom(0,avatars.length)]);
+    @PostMapping(value = "/addGuest")
+    Single<Guest> addGuest(@RequestBody GuestDTO guest) {
+        guest.setPhotoUrl(avatars[generateRandom(0, avatars.length)]);
         return iGuestService.addGuest(guest)
                 .subscribeOn(Schedulers.io());
 
     }
 
     @GetMapping(value = "/deleteGuest/{guestId}")
-    Single<String> deleteGuest(@PathVariable("guestId") String guestId){
+    Single<String> deleteGuest(@PathVariable("guestId") String guestId) {
         return iGuestService.deleteGuest(guestId)
                 .subscribeOn(Schedulers.io());
     }
-    @GetMapping(value="/displayGuests/{roomId}")
-    Single<List<Guest>> displayGuests(@PathVariable("roomId") String roomId){
+
+    @GetMapping(value = "/displayGuests/{roomId}")
+    Single<List<GuestDTO>> displayGuests(@PathVariable("roomId") String roomId) {
         return iGuestService.displayGuests(roomId)
                 .subscribeOn(Schedulers.io());
 
     }
 
     @GetMapping(value = "/guestsResponses/{statementId}")
-    Single<List<GuestWithResponseValuesDTO>> getGuestsResponses(@PathVariable("statementId") String statementId){
+    Single<List<GuestWithResponseValuesDTO>> getGuestsResponses(@PathVariable("statementId") String statementId) {
         return iGuestService.getGuestsResponses(statementId)
                 .subscribeOn(Schedulers.io());
     }
 
     @PostMapping(value = "/addGuestAsAdmin")
-    Single<Guest> addGuestAsAdmin(@RequestBody GuestDTO guestDTO){
+    Single<Guest> addGuestAsAdmin(@RequestBody GuestDTO guestDTO) {
         Utils utils = new Utils();
-        boolean isAdminResult =  utils.validatePassword(guestDTO, roomRepository);
-        if(isAdminResult){
+        boolean isAdminResult = utils.validatePassword(guestDTO, roomRepository);
+        if (isAdminResult) {
+            guestDTO.setPhotoUrl(avatars[generateRandom(0, avatars.length)]);
             return iGuestService.addGuest(guestDTO)
-            .subscribeOn(Schedulers.io());
+                    .subscribeOn(Schedulers.io());
         }
         return null;
     }

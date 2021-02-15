@@ -13,7 +13,7 @@ public interface GuestRepository extends JpaRepository<Guest,String> {
 
 //    @EntityGraph(value = "Room.roomId", type = EntityGraph.EntityGraphType.FETCH)
     @Query(value = "select * from guest where room_id = ?1", nativeQuery = true)
-    List<Guest> findByRoom(String roomId);
+    List<Guest> findByRoomId(String roomId);
 
 
 //    @Query("select" +

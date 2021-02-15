@@ -51,7 +51,7 @@ public class StatementController {
 
     @GetMapping(value="/displayStatement/{roomId}")
     Single<List<Statement>> displayStatement(@PathVariable("roomId") String roomId){
-        System.out.println("Inside display statement");
+//        System.out.println("Inside display statement controller");
         return iStatementService.displayStatement(roomId)
                 .subscribeOn(Schedulers.io());
     }

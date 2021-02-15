@@ -10,5 +10,6 @@ public class GuestWithResponseValuesDTO {
     String guestId;
     String photoUrl;
     Integer responseValue;
+    boolean isAdmin;
 }
 

@@ -1,7 +1,6 @@
 package com.smartvoting.controller;
 
 import com.smartvoting.dto.ResponsesDTO;
-import com.smartvoting.entity.Responses;
 import com.smartvoting.responseDTO.StatsDTO;
 import com.smartvoting.service.IResponsesService;
 import org.springframework.beans.factory.annotation.Autowired;
